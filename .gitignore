@@ -9,6 +9,14 @@ setup-api-key.json
 encode-keys.js
 client_secret_*.json
 
+# Video files (except demo)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+!assets/demo.mp4
+
 # Python virtual environments
 venv/
 .venv/
@@ -21,7 +29,7 @@ __pycache__/
 contacts.csv
 contacts/
 
-# All project documentation files
+# Internal documentation files (not for open source)
 ATTENDEE_CONFLICT_CHECK.md
 CALENDAR_PROVIDER_SWITCH.md
 CONFIGURATION.md
@@ -33,11 +41,9 @@ PROJECT_OVERVIEW.md
 PROJECT_STATUS.md
 QUICK_REFERENCE.md
 QUICKSTART.md
-README.md
 SCREENCAPTURE_INTEGRATION_SUMMARY.md
 SETTINGS_PANEL_GUIDE.md
 SETUP.md
-native/README.md
 
 # Test script generated files
 test-transcript.js
