@@ -4,7 +4,9 @@ AI-powered macOS desktop app that listens to conversations in real time and crea
 
 ## Demo
 
-https://github.com/user/repo/assets/demo.mp4
+<video src="https://github.com/dsi012/AutoMeet/raw/main/assets/demo.mp4" controls width="100%" autoplay loop muted>
+  Your browser does not support the video tag.
+</video>
 
 *A quick demonstration of the app in action - real-time transcription, intent detection, and automatic calendar event creation.*
 
