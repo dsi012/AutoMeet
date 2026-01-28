@@ -1,0 +1,97 @@
+{
+  "name": "meeting-scheduler",
+  "version": "1.0.0",
+  "description": "Mac desktop app for real-time meeting scheduling from conversations",
+  "main": "dist/src/main/main.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:main\" \"npm run dev:renderer\"",
+    "dev:main": "tsc -p tsconfig.main.json && NODE_ENV=development electron .",
+    "dev:renderer": "vite",
+    "build": "npm run build:native && npm run build:main && npm run build:renderer",
+    "build:native": "cd native && npm install && npm run install",
+    "build:main": "tsc -p tsconfig.main.json",
+    "build:renderer": "vite build",
+    "pack": "electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "postinstall": "npm run build:native",
+    "test-transcript": "tsc test-transcript.ts --module commonjs --esModuleInterop --resolveJsonModule --target ES2020 && node test-transcript.js"
+  },
+  "keywords": [
+    "electron",
+    "meeting",
+    "scheduler",
+    "voice",
+    "calendar"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@types/ws": "^8.18.1",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "electron": "^39.2.4",
+    "electron-builder": "^24.9.1",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
+    "@elevenlabs/elevenlabs-js": "^2.25.0",
+    "dotenv": "^17.2.3",
+    "googleapis": "^129.0.0",
+    "openai": "^4.20.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "ws": "^8.16.0"
+  },
+  "build": {
+    "appId": "com.meetingscheduler.app",
+    "productName": "Meeting Scheduler",
+    "files": [
+      "dist/**/*",
+      "native/build/Release/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "assets/icon.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "This app needs microphone access to capture audio for meeting scheduling.",
+        "NSScreenCaptureUsageDescription": "This app needs screen capture access to capture system audio for meeting scheduling."
+      }
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,44 @@
+node_modules/
+dist/
+release/
+.DS_Store
+*.log
+.env
+.env.local
+setup-api-key.json
+encode-keys.js
+client_secret_*.json
+
+# Python virtual environments
+venv/
+.venv/
+env/
+ENV/
+*.pyc
+__pycache__/
+
+# Contacts data (contains personal information)
+contacts.csv
+contacts/
+
+# All project documentation files
+ATTENDEE_CONFLICT_CHECK.md
+CALENDAR_PROVIDER_SWITCH.md
+CONFIGURATION.md
+CONTRIBUTING.md
+DUAL_CALENDAR_TESTING.md
+GOOGLE_OAUTH_SETUP.md
+ICON_SETUP.md
+PROJECT_OVERVIEW.md
+PROJECT_STATUS.md
+QUICK_REFERENCE.md
+QUICKSTART.md
+README.md
+SCREENCAPTURE_INTEGRATION_SUMMARY.md
+SETTINGS_PANEL_GUIDE.md
+SETUP.md
+native/README.md
+
+# Test script generated files
+test-transcript.js
+test-transcript.js.map

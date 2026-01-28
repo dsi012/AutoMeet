@@ -1,0 +1,16 @@
+{
+  "name": "screencapture-native",
+  "version": "1.0.0",
+  "description": "ScreenCaptureKit native module for Electron",
+  "main": "index.js",
+  "scripts": {
+    "install": "node-gyp rebuild"
+  },
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^8.0.0",
+    "node-gyp": "^10.0.0"
+  }
+}
+
+
