@@ -9,13 +9,12 @@ setup-api-key.json
 encode-keys.js
 client_secret_*.json
 
-# Video files (except demo)
+# Video files (except demo GIF)
 *.mp4
 *.mov
 *.avi
 *.mkv
 *.webm
-!assets/demo.mp4
 
 # Python virtual environments
 venv/
