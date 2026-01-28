@@ -186,7 +186,8 @@ public:
 
 - (void)stream:(SCStream *)stream didStopWithError:(NSError *)error {
     if (error) {
-        NSLog(@"Stream stopped with error: %@", error.localizedDescription);
+        NSLog(@"⚠️ Stream stopped with error: %@", error.localizedDescription);
+        NSLog(@"💡 Tip: Stop and restart recording to resume audio capture");
     } else {
         NSLog(@"Stream stopped normally");
     }

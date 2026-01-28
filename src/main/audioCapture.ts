@@ -12,6 +12,9 @@ export class AudioCapture {
   private micCaptureSupported: boolean = false;
   private audioPollingInterval: NodeJS.Timeout | null = null;
   private audioDataCallback: AudioDataCallback | null = null;
+  private lastAudioDataTime: number = 0;
+  private healthCheckInterval: NodeJS.Timeout | null = null;
+  private onStreamError?: () => void;
 
   constructor(window: BrowserWindow) {
     this.window = window;
@@ -41,6 +44,10 @@ export class AudioCapture {
 
   setAudioDataCallback(callback: AudioDataCallback) {
     this.audioDataCallback = callback;
+  }
+
+  setStreamErrorCallback(callback: () => void) {
+    this.onStreamError = callback;
   }
 
   async startCapture(captureSystemAudio: boolean = true, captureMicrophone: boolean = true): Promise<MediaStream | null> {
@@ -94,9 +101,11 @@ export class AudioCapture {
       }
 
       let audioData: Buffer | null;
+      let receivedDataThisCycle = false;
       while ((audioData = screenCapture.getAudioData())) {
         if (this.audioDataCallback) {
           chunkCount++;
+          receivedDataThisCycle = true;
           
           // Convert 48kHz stereo to 48kHz mono
           const convertedAudio = this.convertAudio(audioData);
@@ -105,7 +114,44 @@ export class AudioCapture {
           this.audioDataCallback(convertedAudio);
         }
       }
+      
+      // Update last audio data time if we received data
+      if (receivedDataThisCycle) {
+        this.lastAudioDataTime = Date.now();
+      }
     }, POLL_INTERVAL_MS);
+    
+    // Start health check for native audio stream
+    this.startHealthCheck();
+  }
+
+  private startHealthCheck() {
+    // Check every 5 seconds if we're still receiving audio data
+    this.healthCheckInterval = setInterval(() => {
+      if (!this.isCapturing || !this.useNativeCapture) {
+        return;
+      }
+      
+      const timeSinceLastAudio = Date.now() - this.lastAudioDataTime;
+      
+      // If no audio data for 10 seconds, the stream might have stopped
+      if (this.lastAudioDataTime > 0 && timeSinceLastAudio > 10000) {
+        console.warn('⚠️ No audio data received for 10 seconds - stream may have stopped');
+        console.warn('💡 Tip: Stop and restart recording to resume audio capture');
+        
+        // Notify about stream error
+        if (this.onStreamError) {
+          this.onStreamError();
+        }
+      }
+    }, 5000);
+  }
+
+  private stopHealthCheck() {
+    if (this.healthCheckInterval) {
+      clearInterval(this.healthCheckInterval);
+      this.healthCheckInterval = null;
+    }
   }
 
   private convertAudio(input: Buffer): Buffer {
@@ -139,6 +185,7 @@ export class AudioCapture {
       clearInterval(this.audioPollingInterval);
       this.audioPollingInterval = null;
     }
+    this.stopHealthCheck();
   }
 
   stopCapture() {
@@ -161,6 +208,7 @@ export class AudioCapture {
     }
 
     this.isCapturing = false;
+    this.lastAudioDataTime = 0;
     console.log('Audio capture stopped');
   }
 
