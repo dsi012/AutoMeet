@@ -4,7 +4,9 @@ AI meeting scheduler for macOS — turns conversation into calendar events.
 
 ## Demo
 
-![Demo](assets/demo.gif)
+<p align="center">
+  <img src="assets/demo.gif" alt="Demo" width="600"/>
+</p>
 
 *A quick demonstration of the app in action - real-time transcription, intent detection, and automatic calendar event creation.*
 
