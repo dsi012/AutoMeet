@@ -1,6 +1,6 @@
-# Meeting Scheduler
+# AutoMeet
 
-AI-powered macOS desktop app that listens to conversations in real time and creates calendar events when it detects scheduling intent.
+AI meeting scheduler for macOS — turns conversation into calendar events.
 
 ## Demo
 
@@ -12,14 +12,10 @@ AI-powered macOS desktop app that listens to conversations in real time and crea
 
 ## Features
 
+- **Smart Meeting Scheduling** - Finds available time slots across participants' calendars and coordinates meetings across different time zones
 - **Real-time Audio Transcription** - Uses ElevenLabs Scribe v2 for high-quality speech-to-text
 - **AI-Powered Intent Detection** - Leverages LLM to detect meeting scheduling intents
 - **Automatic Calendar Integration** - Google Calendar
-- **Smart Meeting Extraction** - Uses GPT-4o to extract participants, time, topic, and duration
-- **Modern UI** - Beautiful interface built with React and Tailwind CSS
-- **Secure Storage** - API credentials stored locally with encryption
-- **System Audio Capture** - Captures both microphone and system audio (macOS 13.0+)
-- **Contact Management** - Automatic contact lookup and participant matching
 
 ## System Requirements
 
@@ -53,6 +49,13 @@ Open the app → **Settings** and fill in:
    - Redirect URI: `http://localhost`
 5. Copy **Client ID** and **Client Secret**
 6. Enter them in the app Settings
+
+### Team calendar sharing (for free/busy finding)
+
+For **Smart Meeting Scheduling** to work, participants' calendars must be visible to your Google account:
+
+- **Google Calendar**: In Google Calendar, share your calendar with the account used in the app (or ensure the app's account has access to "See all event details" on team/participant calendars). Participants need to share their calendars with you so the app can suggest times when everyone is free.
+- If calendars are not shared, the app can still create events but cannot suggest slots based on others' availability.
 
 ## Usage
 
